@@ -25,8 +25,7 @@ Factory &Factory::operator=(Factory const &inFactory)
 {
     if (this != &inFactory)
     {
-        Factory newFactory(inFactory);
-        return (newFactory);
+        return( *(new Factory(inFactory)) );
     }
     else
     {
@@ -64,7 +63,7 @@ IOperand const *Factory::createOperand(eOperandType type, std::string const &val
         return (callOperand(type, value));
         break;
     default:
-        throw InstructionUnknownException();
+        throw AVM_Exceptions::InstructionUnknownException();
         break;
     }
 }

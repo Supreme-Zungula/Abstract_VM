@@ -8,7 +8,7 @@ class AVM_Exceptions : public std::exception
         AVM_Exceptions() throw();
         AVM_Exceptions(AVM_Exceptions const &);
         ~AVM_Exceptions() throw();
-        AVM_Exceptions& operator=(AVM_Exceptions const &);
+        AVM_Exceptions& operator=(AVM_Exceptions const &) throw();
 
     class DivisionByZeroException : public std::exception
     {
