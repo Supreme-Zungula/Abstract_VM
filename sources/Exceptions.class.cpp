@@ -1,10 +1,33 @@
 #include "../includes/Exceptions.class.hpp"
 
-DivisionByZeroException::DivisionByZeroException() throw()
+AVM_Exceptions::AVM_Exceptions() {}
+AVM_Exceptions::AVM_Exceptions(AVM_Exceptions const &cpyExcept)
+{
+    if (this != &cpyExcept)
+    {
+        *this = cpyExcept;
+    }
+}
+AVM_Exceptions& AVM_Exceptions::operator=(AVM_Exceptions const &avmExcept)
+{
+    if (this != &avmExcept)
+    {
+        AVM_Exceptions newExcept = AVM_Exceptions(avmExcept);
+        return (newExcept);
+    }
+    else
+    {
+        return(*this);   
+    }
+}
+
+AVM_Exceptions::~AVM_Exceptions() throw() {}
+
+AVM_Exceptions::DivisionByZeroException::DivisionByZeroException()
 {
 }
 
-DivisionByZeroException::DivisionByZeroException(const DivisionByZeroException &cpyExcept) throw()
+AVM_Exceptions::DivisionByZeroException::DivisionByZeroException(const DivisionByZeroException &cpyExcept) 
 {
     if (this != &cpyExcept)
     {
@@ -12,11 +35,11 @@ DivisionByZeroException::DivisionByZeroException(const DivisionByZeroException &
     }
 }
 
-DivisionByZeroException::~DivisionByZeroException() throw()
+AVM_Exceptions::DivisionByZeroException::~DivisionByZeroException() throw()
 {
 }
 
-DivisionByZeroException &DivisionByZeroException::operator=(const DivisionByZeroException &newExcept)
+AVM_Exceptions::DivisionByZeroException &AVM_Exceptions::DivisionByZeroException::operator=(const DivisionByZeroException &newExcept)
 {
     if (this != &newExcept)
     {
@@ -24,16 +47,16 @@ DivisionByZeroException &DivisionByZeroException::operator=(const DivisionByZero
     }
 }
 
-const char *DivisionByZeroException::what() const throw()
+const char *AVM_Exceptions::DivisionByZeroException::what() const throw()
 {
     return ("ERROR: division by zero is forbidden.");
 }
 
-InstructionUnknownException::InstructionUnknownException() throw()
+AVM_Exceptions::InstructionUnknownException::InstructionUnknownException() throw()
 {
 }
 
-InstructionUnknownException::InstructionUnknownException(const InstructionUnknownException &cpyExcept) throw()
+AVM_Exceptions::InstructionUnknownException::InstructionUnknownException(const InstructionUnknownException &cpyExcept) 
 {
     if (this != &cpyExcept)
     {
@@ -41,7 +64,7 @@ InstructionUnknownException::InstructionUnknownException(const InstructionUnknow
     }
 }
 
-InstructionUnknownException &InstructionUnknownException::operator=(const InstructionUnknownException &newExcept) throw()
+AVM_Exceptions::InstructionUnknownException &AVM_Exceptions::InstructionUnknownException::operator=(const InstructionUnknownException &newExcept)
 {
     if (this != &newExcept)
     {
@@ -49,20 +72,20 @@ InstructionUnknownException &InstructionUnknownException::operator=(const Instru
     }
 }
 
-InstructionUnknownException::~InstructionUnknownException() throw()
+AVM_Exceptions::InstructionUnknownException::~InstructionUnknownException() throw()
 {
 }
 
-const char *InstructionUnknownException::what() const throw()
+const char *AVM_Exceptions::InstructionUnknownException::what() const throw()
 {
     return ("ERROR: Unknown instruction.");
 }
 
-SyntaxErrorException::SyntaxErrorException() throw()
+AVM_Exceptions::SyntaxErrorException::SyntaxErrorException()
 {
 }
 
-SyntaxErrorException::SyntaxErrorException(const SyntaxErrorException &cpyExcept) throw()
+AVM_Exceptions::SyntaxErrorException::SyntaxErrorException(const SyntaxErrorException &cpyExcept)
 {
     if (this != &cpyExcept)
     {
@@ -70,28 +93,34 @@ SyntaxErrorException::SyntaxErrorException(const SyntaxErrorException &cpyExcept
     }
 }
 
-SyntaxErrorException &SyntaxErrorException::operator=(const SyntaxErrorException &newExcept) throw()
+AVM_Exceptions::SyntaxErrorException &AVM_Exceptions::SyntaxErrorException::operator=(const SyntaxErrorException &newExcept)
 {
     if (this != &newExcept)
     {
-        this->what = newExcept.what();
+        AVM_Exceptions::SyntaxErrorException syntaxExcept =  AVM_Exceptions::SyntaxErrorException(newExcept);
+        return (syntaxExcept);
     }
+    else
+    {
+        return (*this);
+    }
+    
 }
 
-SyntaxErrorException::~SyntaxErrorException() throw()
+AVM_Exceptions::SyntaxErrorException::~SyntaxErrorException() throw()
 {
 }
 
-const char *SyntaxErrorException::what() const throw()
+const char *AVM_Exceptions::SyntaxErrorException::what() const throw()
 {
     return ("ERROR: invalid syntax");
 }
 
-AssertInstructionException::AssertInstructionException() throw()
+AVM_Exceptions::AssertInstructionException::AssertInstructionException() 
 {
 }
 
-AssertInstructionException::AssertInstructionException(const AssertInstructionException &assertExcept) throw()
+AVM_Exceptions::AssertInstructionException::AssertInstructionException(const AssertInstructionException &assertExcept)
 {
     if (this != &assertExcept)
     {
@@ -99,11 +128,11 @@ AssertInstructionException::AssertInstructionException(const AssertInstructionEx
     }
 }
 
-AssertInstructionException::~AssertInstructionException() throw()
+AVM_Exceptions::AssertInstructionException::~AssertInstructionException() throw()
 {
 }
 
-AssertInstructionException &AssertInstructionException::operator=(const AssertInstructionException &assertExcept) throw()
+AVM_Exceptions::AssertInstructionException &AVM_Exceptions::AssertInstructionException::operator=(const AssertInstructionException &assertExcept)
 {
     if (this != &assertExcept)
     {
@@ -111,16 +140,16 @@ AssertInstructionException &AssertInstructionException::operator=(const AssertIn
     }
 }
 
-const char *AssertInstructionException::what() const throw()
+const char *AVM_Exceptions::AssertInstructionException::what() const throw()
 {
     return ("ERROR: invalid assert value.");
 }
 
-EmptyStackException::EmptyStackException() throw()
+AVM_Exceptions::EmptyStackException::EmptyStackException()
 {
 }
 
-EmptyStackException::EmptyStackException(const EmptyStackException &emptyStack) throw()
+AVM_Exceptions::EmptyStackException::EmptyStackException(const EmptyStackException &emptyStack)
 {
     if (this != &emptyStack)
     {
@@ -128,11 +157,11 @@ EmptyStackException::EmptyStackException(const EmptyStackException &emptyStack) 
     }
 }
 
-EmptyStackException::~EmptyStackException() throw()
+AVM_Exceptions::EmptyStackException::~EmptyStackException() throw()
 {
 }
 
-EmptyStackException &EmptyStackException::operator=(const EmptyStackException &emptyStack) throw()
+AVM_Exceptions::EmptyStackException &AVM_Exceptions::EmptyStackException::operator=(const EmptyStackException &emptyStack)
 {
     if (this != &emptyStack)
     {
@@ -140,7 +169,7 @@ EmptyStackException &EmptyStackException::operator=(const EmptyStackException &e
     }
 }
 
-const char *EmptyStackException::what() const throw()
+const char *AVM_Exceptions::EmptyStackException::what() const throw()
 {
     return ("ERROR: cannot run this action on a empty stack.");
 }

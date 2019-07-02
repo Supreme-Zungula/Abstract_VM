@@ -1,23 +1,23 @@
 #ifndef __OPERAND_TP__
 #define __OPERAND_TP__
 
-#include "Exceptions.class.hpp"
 #include "IOperand.interface.hpp"
 #include "Factory.class.hpp"
+#include "Exceptions.class.hpp"
 
 template <typename T>
 class Operand : public IOperand
 {
     private:
-        Factory             _factoryObj;
+        // Factory				_factoryObj;
         eOperandType        _type;
         std::string         _value;
 
-        Operand(/* args */){};
+        Operand<T>(/* args */){};
 
     public:
-        Operand(eOperandType type, std::string value): _type(type), _value (value){}
-        Operand(Operand const &cpyOP)
+        Operand<T>(eOperandType type, std::string value): _type(type), _value (value){}
+        Operand<T>(Operand const &cpyOP)
 		{ 
 			if (this != &cpyOP ) 
 			{ *this = cpyOP; } 
@@ -32,7 +32,7 @@ class Operand : public IOperand
             }
             return (*this);
         }
-        ~Operand(){};
+        ~Operand<T>(){};
 
         int getPrecision(void) const { return (this->_type); }; // Precision of the type of the instance
         eOperandType getType(void) const { return (this->_type); }; // Type of the value i.e int8, int16, int32, float and double
@@ -64,10 +64,10 @@ class Operand : public IOperand
 					sum = std::stod(this->_value) + std::stod(rhs.toString());
 					break;
 				default:
-					// throw InstructionUnknownException();
+					// throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (_factoryObj.createOperand(type, std::to_string(sum)));
+			return (new Operand(type, std::to_string(sum)));
         }
 		/******** End of operator+(IOperand const &rhs ) **********/
 
@@ -101,7 +101,7 @@ class Operand : public IOperand
 					// throw InstructionUnknownException();
 					break;
 			}
-			return (_factoryObj.createOperand(type, std::to_string(difference)));
+			return (new Operand(type, std::to_string(difference)));
         }
 		/********** END of operator-(IOperand const &rhs) **********/
 		
@@ -135,7 +135,7 @@ class Operand : public IOperand
 					// throw InstructionUnknownException();
 					break;
 			}
-			return (_factoryObj.createOperand(type, std::to_string(product)));
+			return (new Operand(type, std::to_string(product)));
 			
 		}
 		/******** End of operator*(IOperand const &rhs ) **********/
@@ -182,7 +182,7 @@ class Operand : public IOperand
 					// throw InstructionUnknownException();
 					break;
 			}
-			return (_factoryObj.createOperand(type, std::to_string(qoutient)));
+			return (new Operand(type, std::to_string(qoutient)));
 		}
 		/******** End of operator/(IOperand const &rhs ) **********/
 
@@ -227,7 +227,7 @@ class Operand : public IOperand
 					// throw InstructionUnknownException();
 					break;
 			}
-			return (_factoryObj.createOperand(type, std::to_string(modulo)));
+			return (new Operand(type, std::to_string(modulo)));
 		} 
 		/******** End of operator%(IOperand const &rhs ) **********/
 };

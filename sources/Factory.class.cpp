@@ -11,11 +11,6 @@ function_selector_t Factory::_operandsVector[] = {
 
 Factory::Factory()
 {
-    // this->_operandsVector.push_back(&Factory::createInt8);
-    // this->_operandsVector.push_back(&Factory::createInt16);
-    // this->_operandsVector.push_back(&Factory::createInt32);
-    // this->_operandsVector.push_back(&Factory::createFloat);
-    // this->_operandsVector.push_back(&Factory::createDouble);
 }
 
 Factory::Factory(Factory const &cpyFactory)
@@ -43,7 +38,7 @@ Factory::~Factory()
 {
 }
 
-IOperand const *Factory::callOperator(eOperandType type, std::string val) const
+IOperand const *Factory::callOperand(eOperandType type, std::string val) const
 {
     function_selector_t fun = _operandsVector[type];
     return ((*this).*(fun))(val);
@@ -54,22 +49,22 @@ IOperand const *Factory::createOperand(eOperandType type, std::string const &val
     switch (type)
     {
     case INT8:
-        return (callOperator(type, value));
+        return (callOperand(type, value));
         break;
     case INT16:
-        return (callOperator(type, value));
+        return (callOperand(type, value));
         break;
     case INT32:
-        return (callOperator(type, value));
+        return (callOperand(type, value));
         break;
     case FLOAT:
-        return (callOperator(type, value));
+        return (callOperand(type, value));
         break;
     case DOUBLE:
-        return (callOperator(type, value));
+        return (callOperand(type, value));
         break;
     default:
-        // throw InstructionUnknownException();
+        throw InstructionUnknownException();
         break;
     }
 }
@@ -81,24 +76,20 @@ IOperand const *Factory::createInt8(std::string const &value) const
 
 IOperand const *Factory::createInt16(std::string const &value) const
 {
-    const IOperand *newInt16 = new Operand<int16_t>(INT16, value);
-    return (newInt16);
+    return ( new Operand<int16_t>(INT16, value) );
 }
 
 IOperand const *Factory::createInt32(std::string const &value) const
 {
-    const IOperand *newInt32 = new Operand<int32_t>(INT32, value);
-    return (newInt32);
+    return ( new Operand<int32_t>(INT32, value) );
 }
 
 IOperand const *Factory::createFloat(std::string const &value) const
 {
-    const IOperand *newFloat = new Operand<float>(FLOAT, value);
-    return (newFloat);
+    return ( new Operand<float>(FLOAT, value) );
 }
 
 IOperand const *Factory::createDouble(std::string const &value) const
 {
-    const IOperand *newDouble = new Operand<double>(DOUBLE, value);
-    return (newDouble);
+    return ( new Operand<double>(DOUBLE, value) );
 }
