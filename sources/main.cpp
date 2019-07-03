@@ -10,6 +10,7 @@ int main(int argc, char const *argv[])
 
     Operand<int16_t> opInt16(INT16, "16");
     Operand<float> opFloat(FLOAT, "15.45");
+    Operand<double> opDouble(DOUBLE, "23453");
     Parser parserObj;
 
     if (argc == 2)
@@ -25,6 +26,11 @@ int main(int argc, char const *argv[])
     std::cout << "Type: " << opFloat.getType() << '\n';
     std::cout << "Precision: " << opFloat.getPrecision() << '\n';
     std::cout << "Value: " << opFloat.toString() << '\n';
+
+    std::cout << "----DOUBLE-----\n";
+    std::cout << "Type: " << opDouble.getType() << '\n';
+    std::cout << "Precision: " << opDouble.getPrecision() << '\n';
+    std::cout << "Value: " << opDouble.toString() << '\n';
 
     return 0;
 }

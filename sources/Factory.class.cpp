@@ -7,7 +7,9 @@ function_selector_t Factory::_operandsVector[] = {
     &Factory::createInt16,
     &Factory::createInt32,
     &Factory::createFloat,
-    &Factory::createDouble};
+    &Factory::createDouble
+    
+};
 
 Factory::Factory()
 {
@@ -47,24 +49,24 @@ IOperand const *Factory::createOperand(eOperandType type, std::string const &val
 {
     switch (type)
     {
-    case INT8:
-        return (callOperand(type, value));
-        break;
-    case INT16:
-        return (callOperand(type, value));
-        break;
-    case INT32:
-        return (callOperand(type, value));
-        break;
-    case FLOAT:
-        return (callOperand(type, value));
-        break;
-    case DOUBLE:
-        return (callOperand(type, value));
-        break;
-    default:
-        throw AVM_Exceptions::InstructionUnknownException();
-        break;
+        case INT8:
+            return (callOperand(type, value));
+            break;
+        case INT16:
+            return (callOperand(type, value));
+            break;
+        case INT32:
+            return (callOperand(type, value));
+            break;
+        case FLOAT:
+            return (callOperand(type, value));
+            break;
+        case DOUBLE:
+            return (callOperand(type, value));
+            break;
+        default:
+            throw AVM_Exceptions::InstructionUnknownException();
+            break;
     }
 }
 

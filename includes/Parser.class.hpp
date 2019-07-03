@@ -4,21 +4,25 @@
 #include <iostream>
 #include <fstream>
 #include <ostream>
+#include <vector>
 
 class Parser
 {
     private:
-        std::string     _filename;
+        std::vector<std::string> _commandsVec;
 
     public:
         Parser();
-        Parser(std::string  filename);
         Parser(Parser const &);
         Parser & operator=(Parser const &);
         ~Parser();
 
-        void    readFile() const;
-        void    readFile(std::string file);
+        void        readFile(std::string file) const;
+        // void        readTerminal() const;
+        bool        hasComment(std::string line) const;
+        bool        hasCommand(std::string line) const;
+        std::string getCommand(std::string line) const;
+        std::string getDataType(std::string line) const;
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include "Operand.template.hpp"
 
 class Factory;
-typedef IOperand const *(Factory::*function_selector_t)(std::string const &)const;
+typedef IOperand const *(Factory::*function_selector_t)(std::string const &) const;
 
 class Factory
 {

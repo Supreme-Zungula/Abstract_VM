@@ -2,8 +2,6 @@
 
 Parser::Parser() {}
 
-Parser::Parser(std::string filename) : _filename(filename){}
-
 Parser::Parser(Parser const &parserCpy)
 {
     if (this != &parserCpy)
@@ -12,7 +10,7 @@ Parser::Parser(Parser const &parserCpy)
     }
 }
 
-Parser & Parser::operator=(Parser const &parser)
+Parser &Parser::operator=(Parser const &parser)
 {
     if (this != &parser)
     {
@@ -24,40 +22,123 @@ Parser & Parser::operator=(Parser const &parser)
     }
 }
 
-Parser::~Parser(){}
+Parser::~Parser() {}
 
-void Parser::readFile() const
+void Parser::readFile(std::string file) const
 {
-    std::fstream    filestream(_filename);
-    std::string     line;
+    std::fstream filestream(file);
+    std::string line;
 
     if (filestream.is_open())
     {
         while (std::getline(filestream, line))
         {
-            std::cout << line;
+            if (hasComment(line))
+            {
+                std::cout << "comment" << '\n';
+            }
+            if (hasCommand(line))
+            {
+                std::cout << getCommand(line) << '\n';
+            }
         }
     }
     else
     {
-        std::cout << "File not opened.\n"; 
+        std::cout << "File not opened.\n";
     }
 }
 
-void Parser::readFile(std::string file)
+bool Parser::hasComment(std::string line) const
 {
-    std::fstream    filestream(file);
-    std::string     line;
-
-    if (filestream.is_open())
+    if (line.find_first_of(';') != std::string::npos)
     {
-        while (std::getline(filestream, line))
-        {
-            std::cout << line << '\n';
-        }
+        return (true);
+    }
+    return (false);
+}
+
+bool Parser::hasCommand(std::string line) const
+{
+    if (line.find("push") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("add") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("mul") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("dump") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("assert") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("exit") != std::string::npos)
+    {
+        return (true);
     }
     else
     {
-        std::cout << "File not opened.\n"; 
+        return (false);
+    }
+}
+
+std::string Parser::getCommand(std::string line) const
+{
+    size_t start;
+    size_t end;
+
+    if (line.find("push") != std::string::npos)
+    {
+        start = line.find("push");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("add") != std::string::npos)
+    {
+        start = line.find("add");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("pop") != std::string::npos)
+    {
+        start = line.find("pop");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("mul") != std::string::npos)
+    {
+        start = line.find("mul");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("dump") != std::string::npos)
+    {
+        start = line.find("dump");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("assert") != std::string::npos)
+    {
+        start = line.find("assert");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else if (line.find("exit") != std::string::npos)
+    {
+        start = line.find("exit");
+        end = line.find(' ');
+        return (line.substr(start, end));
+    }
+    else
+    {
+        return ("");
     }
 }
