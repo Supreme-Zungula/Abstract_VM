@@ -17,6 +17,8 @@ int main(int argc, char const *argv[])
     {
         parserObj.readFile(std::string(argv[1]));
     }
+    
+    /* 
     std::cout << "-----INT16-----\n";
     std::cout << "Type: " << opInt16.getType() << '\n';
     std::cout << "Precision: " << opInt16.getPrecision() << '\n';
@@ -30,7 +32,8 @@ int main(int argc, char const *argv[])
     std::cout << "----DOUBLE-----\n";
     std::cout << "Type: " << opDouble.getType() << '\n';
     std::cout << "Precision: " << opDouble.getPrecision() << '\n';
-    std::cout << "Value: " << opDouble.toString() << '\n';
+    std::cout << "Value: " << opDouble.toString() << '\n'; 
+    */
 
     return 0;
 }

@@ -24,7 +24,7 @@ Parser &Parser::operator=(Parser const &parser)
 
 Parser::~Parser() {}
 
-void Parser::readFile(std::string file) const
+void Parser::readFile(std::string file)
 {
     std::fstream filestream(file);
     std::string line;
@@ -39,9 +39,10 @@ void Parser::readFile(std::string file) const
             }
             if (hasCommand(line))
             {
-                std::cout << getCommand(line) << '\n';
+                _commandsVec.push_back(getCommand(line));
             }
         }
+        displayCommands();
     }
     else
     {
@@ -90,6 +91,13 @@ bool Parser::hasCommand(std::string line) const
     }
 }
 
+void Parser::displayCommands() const
+{
+    for (std::string command : _commandsVec)
+    {
+        std::cout << command << '\n';
+    }
+}
 std::string Parser::getCommand(std::string line) const
 {
     size_t start;
