@@ -15,7 +15,19 @@ int main(int argc, char const *argv[])
 
     if (argc == 2)
     {
-        parserObj.readFile(std::string(argv[1]));
+        try
+        {
+            parserObj.readFile(std::string(argv[1]));
+        }
+        catch(const AVM_Exceptions::SyntaxErrorException &ex)
+        {
+            std::cerr << ex.what() << '\n';
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
     }
     
     /* 

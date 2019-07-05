@@ -5,6 +5,7 @@
 #include <fstream>
 #include <ostream>
 #include <vector>
+#include "Exceptions.class.hpp"
 
 class Parser
 {
@@ -19,12 +20,15 @@ class Parser
 
         void        readFile(std::string file);
         // void        readTerminal() const;
-        bool        hasComment(std::string line) const;
-        bool        hasCommand(std::string line) const;
-        bool        isValidCommand(std::string line) const;
-        void        displayCommands() const;
-        std::string getCommand(std::string line) const;
-        std::string getDataType(std::string line) const;
+        bool            hasComment(std::string line) const;
+        bool            hasCommand(std::string line) const;
+        void            displayCommands() const;
+        bool            isValidCommand(std::string line) const;
+        bool            isValidCommandName(std::string command);
+        bool            isValidDataType(std::string dataType) const;
+        bool            isValidDataValue(std::string data);
+        std::string     getCommand(std::string line) const;
+        std::string     getDataType(std::string line) const;
         
 };
 

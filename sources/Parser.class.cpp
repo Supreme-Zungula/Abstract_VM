@@ -33,16 +33,24 @@ void Parser::readFile(std::string file)
     {
         while (std::getline(filestream, line))
         {
+            std::cout << line << '\n';
             if (hasComment(line))
             {
                 std::cout << "comment" << '\n';
             }
             if (hasCommand(line))
             {
-                _commandsVec.push_back(getCommand(line));
+                if (isValidCommandName(getCommand(line)) && isValidDataType(line))
+                {
+                    _commandsVec.push_back(getCommand(line));
+                }
+                else
+                {
+                    throw AVM_Exceptions::SyntaxErrorException();
+                }
             }
         }
-        displayCommands();
+        // displayCommands();
     }
     else
     {
@@ -50,6 +58,7 @@ void Parser::readFile(std::string file)
     }
 }
 
+/* Checks if given line has a comment on it. */
 bool Parser::hasComment(std::string line) const
 {
     if (line.find_first_of(';') != std::string::npos)
@@ -58,7 +67,7 @@ bool Parser::hasComment(std::string line) const
     }
     return (false);
 }
-
+/* Checks if given line has a commnand */
 bool Parser::hasCommand(std::string line) const
 {
     if (line.find("push") != std::string::npos)
@@ -89,6 +98,84 @@ bool Parser::hasCommand(std::string line) const
     {
         return (false);
     }
+}
+
+/* Checks if given command is a valid command  */
+bool Parser::isValidCommandName(std::string command)
+{
+    if (command.compare("push") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("add") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("mul") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("dump") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("pop") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("assert") == 0)
+    {
+        return (true);
+    }
+    else if (command.compare("exit") == 0)
+    {
+        return (true);
+    }
+    else
+    {
+        return (false);
+    }
+}
+
+/* Checks if the given string forms a valid data type i.e int8, int16, int32, float and double */
+bool Parser::isValidDataType(std::string data) const
+{
+    size_t      start;
+    size_t      end;
+    
+    start = data.find(' ');
+    end = data.find('(');
+
+    std::cout << "data: " << data.substr(start + 1, end -1 ) << '\n';
+    if (start == std::string::npos || end == std::string::npos){ return false; }
+    if (data.substr(start + 1,  end - 1).compare("int8") == 0)
+    {
+        return (true);
+    }
+    else if (data.substr(start + 1,  end-1).compare("int16") == 0)
+    {
+        return (true);
+    }
+    else if (data.substr(start + 1,  end-1).compare("int8") == 0)
+    {
+        return (true);
+    }
+    else if (data.substr(start + 1,  end-1).compare("int32") == 0)
+    {
+        return (true);
+    }
+    else if (data.substr(start + 1,  end-1).compare("float") == 0)
+    {
+        return (true);
+    }
+    else if (data.substr(start + 1,  end-1).compare("double") == 0)
+    {
+        return (true);
+    }
+    else
+    {
+        return (false);
+    }    
 }
 
 void Parser::displayCommands() const
@@ -150,3 +237,10 @@ std::string Parser::getCommand(std::string line) const
         return ("");
     }
 }
+
+/* 
+std::string Parser::getDataType(std::string line) const
+{
+   
+} 
+*/

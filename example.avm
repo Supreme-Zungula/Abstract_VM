@@ -3,7 +3,9 @@
 ; -------------
 push int32(42)
 push int32(33)
+
 add
+
 push float(44.55)
 
 mul
