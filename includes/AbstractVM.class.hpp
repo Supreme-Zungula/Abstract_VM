@@ -1,13 +1,13 @@
 #ifndef __ABSTRACT_VM__
 #define __ABSTRACT_VM__
 
-#include <stack>
+#include <list>
 #include "Operand.template.hpp"
 class AbstractVM
 {
     private:
         /* data */
-        std::stack<IOperand const&> avm_stack;
+        std::list<IOperand const&> avm_stack;
         
     public:
         AbstractVM(/* args */);
