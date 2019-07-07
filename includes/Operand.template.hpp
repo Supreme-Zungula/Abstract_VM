@@ -1,15 +1,14 @@
 #ifndef __OPERAND_TP__
 #define __OPERAND_TP__
 
+// #include "Factory.class.hpp"
 #include "IOperand.interface.hpp"
-#include "Factory.class.hpp"
-#include "Exceptions.class.hpp"
+// #include "Exceptions.class.hpp"
 
 template <typename T>
 class Operand : public IOperand
 {
     private:
-        // Factory				_factoryObj;
         eOperandType        _type;
         std::string         _value;
 
@@ -39,195 +38,169 @@ class Operand : public IOperand
 		std::string const &toString(void) const { return (this->_value); }; // return a string represention of the value
         
         /*-------------------- Sum -------------------------*/
-        IOperand const *operator+(IOperand const &rhs) const
+        virtual IOperand const *operator+(IOperand const &rhs) const
         {
 			eOperandType 	type;
-			Operand			result;
-			T				sum;
+			std::string 	result;
+
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 			
 			switch (type)
 			{
-				case INT8:
-					sum = std::atoi(_value.c_str()) + std::atoi(rhs.toString().c_str());
+				case eOperandType::INT8:
+				case eOperandType::INT16:
+				case eOperandType::INT32:
+					result = std::to_string(std::atoi(_value.c_str()) + std::stoi(rhs.toString()));
 					break;
-				case INT16:
-					sum = std::atoi(this->_value.c_str()) + std::atoi(rhs.toString().c_str());
+				case eOperandType::FLOAT:
+					result = std::to_string(std::atof(_value.c_str()) + std::stof(rhs.toString()));
 					break;
-				case INT32:
-					sum = std::atoi(this->_value.c_str()) + std::atoi(rhs.toString().c_str());
-					break;
-				case FLOAT:
-					sum = std::atof(this->_value.c_str()) + std::atoi(rhs.toString().c_str());
-					break;
-				case DOUBLE:
-					sum = std::stod(this->_value) + std::stod(rhs.toString());
+				case eOperandType::DOUBLE:
+					result = std::to_string(std::stod(_value) + std::stod(rhs.toString()));
 					break;
 				default:
-					// throw AVM_Exceptions::InstructionUnknownException();
+					throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (new Operand(type, std::to_string(sum)));
+			return (new Operand(type, result));
         }
 		/******** End of operator+(IOperand const &rhs ) **********/
 
         /*----------------- Difference --------------------*/
-        IOperand const *operator-(IOperand const &rhs) const
+        virtual IOperand const *operator-(IOperand const &rhs) const
         {
 			eOperandType 	type;
-			Operand			result;
-			T				difference;
+			std::string 	result;
 
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 			
 			switch (type)
 			{
-				case INT8:
-					difference = std::atoi(_value.c_str()) - std::atoi(rhs.toString().c_str());
+				case eOperandType::INT8:
+				case eOperandType::INT16:
+				case eOperandType::INT32:
+					result = std::to_string(std::atoi(_value.c_str()) - std::stoi(rhs.toString().c_str()));
 					break;
-				case INT16:
-					difference = std::atoi(this->_value.c_str()) - std::atoi(rhs.toString().c_str());
+				case eOperandType::FLOAT:
+					result = std::to_string(std::atof(_value.c_str()) - std::stof(rhs.toString().c_str()));
 					break;
-				case INT32:
-					difference = std::atoi(this->_value.c_str()) - std::atoi(rhs.toString().c_str());
-					break;
-				case FLOAT:
-					difference = std::atof(this->_value.c_str()) - std::atoi(rhs.toString().c_str());
-					break;
-				case DOUBLE:
-					difference = std::stod(this->_value) - std::stod(rhs.toString());
+				case eOperandType::DOUBLE:
+					result = std::to_string(std::stod(_value) - std::stod(rhs.toString().c_str()));
 					break;
 				default:
-					// throw InstructionUnknownException();
+					throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (new Operand(type, std::to_string(difference)));
+			return (new Operand(type, result));
         }
 		/********** END of operator-(IOperand const &rhs) **********/
 		
 		/*--------------- Product ------------------*/
-        IOperand const *operator*(IOperand const &rhs) const
+        virtual IOperand const *operator*(IOperand const &rhs) const
 		{
 			eOperandType 	type;
-			Operand			result;
-			T				product;
+			std::string 	result;
 
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 			
 			switch (type)
 			{
-				case INT8:
-					product = std::atoi(_value.c_str()) * std::atoi(rhs.toString().c_str());
+				case eOperandType::INT8:
+				case eOperandType::INT16:
+				case eOperandType::INT32:
+					result = std::to_string(std::atoi(_value.c_str()) * std::stoi(rhs.toString().c_str()));
 					break;
-				case INT16:
-					product = std::atoi(this->_value.c_str()) * std::atoi(rhs.toString().c_str());
+				case eOperandType::FLOAT:
+					result = std::to_string(std::atof(_value.c_str()) * std::stof(rhs.toString().c_str()));
 					break;
-				case INT32:
-					product = std::atoi(this->_value.c_str()) * std::atoi(rhs.toString().c_str());
-					break;
-				case FLOAT:
-					product = std::atof(this->_value.c_str()) * std::atoi(rhs.toString().c_str());
-					break;
-				case DOUBLE:
-					product = std::stod(this->_value) * std::stod(rhs.toString());
+				case eOperandType::DOUBLE:
+					result = std::to_string(std::stod(_value) * std::stod(rhs.toString().c_str()));
 					break;
 				default:
-					// throw InstructionUnknownException();
+					throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (new Operand(type, std::to_string(product)));
+			return (new Operand(type, result));
 			
 		}
 		/******** End of operator*(IOperand const &rhs ) **********/
 
 
 		/*------------ Quotient -------------------*/
-        IOperand const *operator/(IOperand const &rhs) const
+        virtual IOperand const *operator/(IOperand const &rhs) const
 		{
 			eOperandType 	type;
-			Operand			result;
-			T				qoutient;
+			std::string 	result;
 
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
+
 			
-			/* if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && !std::atoi(rhs.toString().c_str()))
+			if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && !std::atoi	(rhs.toString().c_str()))
 			{
-				throw DivisionByZeroException();
+				throw AVM_Exceptions::DivisionByZeroException();
 			}
 			else if ((rhs.getType() == FLOAT || rhs.getType() == DOUBLE) && !std::stod(rhs.toString()))
 			{
-				throw DivisionByZeroException();
-			} */
-			
-			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
+				throw AVM_Exceptions::DivisionByZeroException();
+			}
 			
 			switch (type)
 			{
-				case INT8:
-					qoutient = std::atoi(_value.c_str()) / std::atoi(rhs.toString().c_str());
+				case eOperandType::INT8:
+				case eOperandType::INT16:
+				case eOperandType::INT32:
+					result = std::to_string(std::atoi(_value.c_str()) / std::stoi(rhs.toString().c_str()));
 					break;
-				case INT16:
-					qoutient = std::atoi(this->_value.c_str()) / std::atoi(rhs.toString().c_str());
+				case eOperandType::FLOAT:
+					result = std::to_string(std::atof(_value.c_str()) / std::stof(rhs.toString().c_str()));
 					break;
-				case INT32:
-					qoutient = std::atoi(this->_value.c_str()) / std::atoi(rhs.toString().c_str());
-					break;
-				case FLOAT:
-					qoutient = std::atof(this->_value.c_str()) / std::atoi(rhs.toString().c_str());
-					break;
-				case DOUBLE:
-					qoutient = std::stod(this->_value) / std::stod(rhs.toString());
+				case eOperandType::DOUBLE:
+					result = std::to_string(std::stod(_value) / std::stod(rhs.toString().c_str()));
 					break;
 				default:
-					// throw InstructionUnknownException();
+					throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (new Operand(type, std::to_string(qoutient)));
+			return (new Operand(type, result));
 		}
 		/******** End of operator/(IOperand const &rhs ) **********/
 
 		/*---------------- Modulo ------------------*/
-        IOperand const *operator%(IOperand const &rhs) const
+        virtual IOperand const *operator%(IOperand const &rhs) const
 		{
 			eOperandType 	type;
-			Operand			result;
-			T				modulo;
+			std::string 	result;
 
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 			
-			/* if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && !std::atoi(rhs.toString().c_str()))
+			if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && !std::atoi	(rhs.toString().c_str()))
 			{
-				throw DivisionByZeroException();
+				throw AVM_Exceptions::DivisionByZeroException();
 			}
-			else if ((rhs.getType() == FLOAT || rhs.getType() == DOUBLE) && !std::stod(rhs.toString()))
+			else if ((rhs.getType() == FLOAT || rhs.getType() == DOUBLE) && 
+					!std::stod(rhs.toString()))
 			{
-				throw DivisionByZeroException();
-			} */
-			
-			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
+				throw AVM_Exceptions::DivisionByZeroException();
+			}
 			
 			switch (type)
 			{
-				case INT8:
-					modulo = std::atoi(_value.c_str()) % std::atoi(rhs.toString().c_str());
+				case eOperandType::INT8:
+				case eOperandType::INT16:
+				case eOperandType::INT32:
+					result = std::to_string(std::atoi(_value.c_str()) / std::stoi(rhs.toString().c_str()));
 					break;
-				case INT16:
-					modulo = std::atoi(this->_value.c_str()) % std::atoi(rhs.toString().c_str());
+				case eOperandType::FLOAT:
+					result = std::to_string(std::atof(_value.c_str()) / std::stof(rhs.toString().c_str()));
 					break;
-				case INT32:
-					modulo = std::atoi(this->_value.c_str()) % std::atoi(rhs.toString().c_str());
-					break;
-				case FLOAT:
-					modulo = std::atol(this->_value.c_str()) % std::atol(rhs.toString().c_str());
-					break;
-				case DOUBLE:
-					modulo = std::atoll(_value.c_str()) % std::atoll(rhs.toString().c_str());
+				case eOperandType::DOUBLE:
+					result = std::to_string(std::stod(_value.c_str()) / std::stod(rhs.toString().c_str()));
 					break;
 				default:
-					// throw InstructionUnknownException();
+					throw AVM_Exceptions::InstructionUnknownException();
 					break;
 			}
-			return (new Operand(type, std::to_string(modulo)));
+			return (new Operand(type, result));
 		} 
 		/******** End of operator%(IOperand const &rhs ) **********/
 };

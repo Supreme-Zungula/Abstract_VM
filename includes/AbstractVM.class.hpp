@@ -3,6 +3,7 @@
 
 #include <list>
 #include "Operand.template.hpp"
+
 class AbstractVM
 {
     private:

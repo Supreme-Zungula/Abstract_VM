@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
 {
 
     Operand<int16_t> opInt16(INT16, "16");
-    Operand<float> opFloat(FLOAT, "15.45");
+    Operand<float> opFloat(FLOAT, "15.56");
     Operand<double> opDouble(DOUBLE, "23453");
     Parser parserObj;
 
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
         
     }
     
-    /* 
+    
     std::cout << "-----INT16-----\n";
     std::cout << "Type: " << opInt16.getType() << '\n';
     std::cout << "Precision: " << opInt16.getPrecision() << '\n';
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
     std::cout << "Type: " << opDouble.getType() << '\n';
     std::cout << "Precision: " << opDouble.getPrecision() << '\n';
     std::cout << "Value: " << opDouble.toString() << '\n'; 
-    */
+   
 
     return 0;
 }
