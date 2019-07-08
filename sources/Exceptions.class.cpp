@@ -22,6 +22,7 @@ AVM_Exceptions &AVM_Exceptions::operator=(AVM_Exceptions const &avmExcept) throw
 
 AVM_Exceptions::~AVM_Exceptions() throw() {}
 
+/* ---------------DIVISION BY ZERO------------------ */
 AVM_Exceptions::DivisionByZeroException::DivisionByZeroException() throw()
 {
 }
@@ -54,7 +55,9 @@ const char *AVM_Exceptions::DivisionByZeroException::what() const throw()
 {
     return ("ERROR: division by zero is forbidden.");
 }
+/* --------------- END OF DIVISION BY ZERO------------------ */
 
+/* ---------------UNKNOWN INSTRUCTION ERROR------------------ */
 AVM_Exceptions::InstructionUnknownException::InstructionUnknownException() throw()
 {
 }
@@ -87,7 +90,9 @@ const char *AVM_Exceptions::InstructionUnknownException::what() const throw()
 {
     return ("ERROR: Unknown instruction.");
 }
+/* ---------------END OF UNKNOWN INSTRUCTION EXCEPTION------------------ */
 
+/* ---------------SYNTAX ERROR EXCEPTION------------------ */
 AVM_Exceptions::SyntaxErrorException::SyntaxErrorException() throw()
 {
 }
@@ -121,6 +126,7 @@ const char *AVM_Exceptions::SyntaxErrorException::what() const throw()
     return ("ERROR: invalid syntax");
 }
 
+/* --------------- ASSERT INSTRUCTION EXCEPTION ------------------ */
 AVM_Exceptions::AssertInstructionException::AssertInstructionException() throw()
 {
 }
@@ -154,6 +160,7 @@ const char *AVM_Exceptions::AssertInstructionException::what() const throw()
     return ("ERROR: invalid assert value.");
 }
 
+/* --------------- EMPTY STACK EXCEPTION ------------------ */
 AVM_Exceptions::EmptyStackException::EmptyStackException() throw()
 {
 }
@@ -185,4 +192,72 @@ AVM_Exceptions::EmptyStackException &AVM_Exceptions::EmptyStackException::operat
 const char *AVM_Exceptions::EmptyStackException::what() const throw()
 {
     return ("ERROR: cannot run this action on a empty stack.");
+}
+
+/* ---------------FILE ERROR EXCEPTION ------------------ */
+AVM_Exceptions::FileErrorException::FileErrorException() throw()
+{
+}
+
+AVM_Exceptions::FileErrorException::FileErrorException(const FileErrorException &emptyStack) throw()
+{
+    if (this != &emptyStack)
+    {
+        *this = emptyStack;
+    }
+}
+
+AVM_Exceptions::FileErrorException::~FileErrorException() throw()
+{
+}
+
+AVM_Exceptions::FileErrorException &AVM_Exceptions::FileErrorException::operator=(const FileErrorException &emptyStack) throw()
+{
+    if (this != &emptyStack)
+    {
+        return (*(new AVM_Exceptions::FileErrorException(emptyStack)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::FileErrorException::what() const throw()
+{
+    return ("ERROR: Could not open or read file.");
+}
+
+/* --------------- ARITHMATIC EXCEPTION ------------------ */
+AVM_Exceptions::ArithmaticException::ArithmaticException() throw()
+{
+}
+
+AVM_Exceptions::ArithmaticException::ArithmaticException(const ArithmaticException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        *this = opExcept;
+    }
+}
+
+AVM_Exceptions::ArithmaticException::~ArithmaticException() throw()
+{
+}
+
+AVM_Exceptions::ArithmaticException &AVM_Exceptions::ArithmaticException::operator=(const ArithmaticException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        return (*(new AVM_Exceptions::ArithmaticException(opExcept)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::ArithmaticException::what() const throw()
+{
+    return ("ERROR: Cannot perform this arithmatic operation.");
 }

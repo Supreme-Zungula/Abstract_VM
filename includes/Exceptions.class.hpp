@@ -84,6 +84,16 @@ class AVM_Exceptions : public std::exception
         virtual const char* what() const throw();
     };
 
+    class FileErrorException : public std::exception
+    {
+        public:
+        FileErrorException () throw();
+        FileErrorException (const FileErrorException&) throw();
+        FileErrorException& operator= (const FileErrorException&) throw();
+        virtual ~FileErrorException() throw();
+        virtual const char* what() const throw();
+    };
+    
 };
 
 #endif

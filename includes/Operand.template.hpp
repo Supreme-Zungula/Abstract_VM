@@ -16,13 +16,13 @@ class Operand : public IOperand
 
     public:
         Operand<T>(eOperandType type, std::string value): _type(type), _value (value){}
-        Operand<T>(Operand const &cpyOP)
+        Operand<T>(IOperand const &cpyOP)
 		{ 
 			if (this != &cpyOP ) 
 			{ *this = cpyOP; } 
 		}
 
-        Operand& operator=(Operand const &newOP)
+        IOperand& operator=(IOperand const &newOP)
         {
             if (this != &newOP)
             {
@@ -204,5 +204,10 @@ class Operand : public IOperand
 		} 
 		/******** End of operator%(IOperand const &rhs ) **********/
 };
-
+template <typename T>
+std::ostream &operator<<(std::ostream &os, Operand<T> const &srcObj)
+{
+    os << srcObj.toString();
+    return (os);
+}
 #endif

@@ -24,6 +24,7 @@ Parser &Parser::operator=(Parser const &parser)
 
 Parser::~Parser() {}
 
+/* 
 void Parser::readFile(std::string file)
 {
     std::fstream filestream(file);
@@ -42,6 +43,10 @@ void Parser::readFile(std::string file)
                 if (isValidCommand(line))
                 {
                     _commandsVec.push_back(getCommand(line));
+                    if (getCommand(line).compare("push") == 0 ||  getCommand(line).compare("assert") == 0)
+                    {
+                        std::cout << getCommand(line) << "->value: " << getDataValue(line) << '\n';
+                    }
                 }
                 else
                 {
@@ -56,6 +61,7 @@ void Parser::readFile(std::string file)
         std::cout << "File not opened.\n";
     }
 }
+*/
 
 /* Checks if given line has a comment on it. */
 bool Parser::hasComment(std::string line) const
@@ -216,13 +222,6 @@ bool Parser::isValidDataValue(std::string data) const
     return (true);
 }
 
-void Parser::displayCommands() const
-{
-    for (std::string command : _commandsVec)
-    {
-        std::cout << command << '\n';
-    }
-}
 std::string Parser::getCommand(std::string line) const
 {
     size_t start;
@@ -300,9 +299,22 @@ std::string Parser::getCommand(std::string line) const
     }
 }
 
-/* 
-std::string Parser::getDataType(std::string line) const
+
+std::string Parser::getDataValue(std::string line) const
 {
-   
+    size_t      start;
+    size_t      end;
+
+    start = line.find_first_of('(');
+    end = line.find_first_of(')');
+
+    return (line.substr(start+1, end-start-1));
 } 
-*/
+
+/* void Parser::displayCommands() const
+{
+    for (std::string command : _commandsVec)
+    {
+        std::cout << command << '\n';
+    }
+} */
