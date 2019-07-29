@@ -15,7 +15,10 @@ class Operand : public IOperand
         Operand<T>(/* args */){};
 
     public:
-        Operand<T>(eOperandType type, std::string value): _type(type), _value (value){}
+        Operand<T>(eOperandType type, std::string value): _type(type), _value (value)
+		{
+			if (this->_value.compare(value) != 0) throw AVM_Exceptions::OverflowException();
+		}
         Operand<T>(IOperand const &cpyOP)
 		{ 
 			if (this != &cpyOP ) 
@@ -75,7 +78,7 @@ class Operand : public IOperand
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 			
 			switch (type)
-			{
+			{ 
 				case eOperandType::INT8:
 				case eOperandType::INT16:
 				case eOperandType::INT32:
@@ -135,11 +138,11 @@ class Operand : public IOperand
 			type = (this->_type > rhs.getPrecision() ? this->_type : rhs.getType());
 
 			
-			if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && !std::atoi	(rhs.toString().c_str()))
+			if ((rhs.getType() == INT8 || rhs.getType() == INT16 || rhs.getType() == INT32) && std::atoi(rhs.toString().c_str()) == 0)
 			{
 				throw AVM_Exceptions::DivisionByZeroException();
 			}
-			else if ((rhs.getType() == FLOAT || rhs.getType() == DOUBLE) && !std::stod(rhs.toString()))
+			else if ((rhs.getType() == FLOAT || rhs.getType() == DOUBLE) && std::stod(rhs.toString()) == 0.0)
 			{
 				throw AVM_Exceptions::DivisionByZeroException();
 			}

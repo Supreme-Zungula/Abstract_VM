@@ -94,6 +94,38 @@ class AVM_Exceptions : public std::exception
         virtual const char* what() const throw();
     };
     
+
+    class NoCommandsException : public std::exception
+    {
+        public:
+        NoCommandsException () throw();
+        NoCommandsException (const NoCommandsException&) throw();
+        NoCommandsException& operator= (const NoCommandsException&) throw();
+        virtual ~NoCommandsException() throw();
+        virtual const char* what() const throw();
+    };
+
+    class OverflowException : public std::exception
+    {
+        public:
+        OverflowException () throw();
+        OverflowException (const OverflowException&) throw();
+        OverflowException& operator= (const OverflowException&) throw();
+        virtual ~OverflowException() throw();
+        virtual const char* what() const throw();
+    };
+    
+
+    class UnderflowException : public std::exception
+    {
+        public:
+        UnderflowException () throw();
+        UnderflowException (const UnderflowException&) throw();
+        UnderflowException& operator= (const UnderflowException&) throw();
+        virtual ~UnderflowException() throw();
+        virtual const char* what() const throw();
+    };
+    
 };
 
 #endif

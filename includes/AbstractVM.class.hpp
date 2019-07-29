@@ -3,6 +3,8 @@
 
 #include <list>
 #include <fstream>
+#include <ostream>
+#include <istream>
 #include <iostream>
 #include "Operand.template.hpp"
 #include "Factory.class.hpp"
@@ -16,6 +18,10 @@ class AbstractVM
         std::list<std::string>          _commandsList;
         Factory                         _factory;
         Parser                          _parser;
+        
+        void        pushValueToStack(std::string command);
+        void        assertStackValue(std::string command);
+        bool        hasExit() const;
 
     public:
         AbstractVM();

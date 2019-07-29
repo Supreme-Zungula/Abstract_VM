@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "../includes/Exceptions.class.hpp"
 #include "../includes/Factory.class.hpp"
 
@@ -72,25 +73,70 @@ IOperand const *Factory::createOperand(eOperandType type, std::string const &val
 
 IOperand const *Factory::createInt8(std::string const &value) const
 {
+    std::string     result;
+
+    result = std::to_string(std::atoi(value.c_str()));
+    if (value.compare(result) != 0)
+        throw AVM_Exceptions::OverflowException();
     return (new Operand<int8_t>(INT8, value));
 }
 
 IOperand const *Factory::createInt16(std::string const &value) const
 {
-    return ( new Operand<int16_t>(INT16, value) );
+    std::string     result;
+
+    result = std::to_string(std::atoi(value.c_str()));
+    if (value.compare(result) != 0)
+        throw AVM_Exceptions::OverflowException();
+    return (new Operand<int16_t>(INT16, value));
 }
 
 IOperand const *Factory::createInt32(std::string const &value) const
 {
-    return ( new Operand<int32_t>(INT32, value) );
+    std::string     result;
+
+    result = std::to_string(std::atoi(value.c_str()));
+    if (value.compare(result) != 0)
+        throw AVM_Exceptions::OverflowException();
+    return (new Operand<int32_t>(INT16, value));
 }
 
 IOperand const *Factory::createFloat(std::string const &value) const
 {
+    std::string     result;
+
+    result = std::to_string(std::atof(value.c_str()));
+    std::cout << "value = " <<  value << "\nresult = " <<  result << "\n";
+    if (hasNoneZero(value) == true && hasNoneZero(result) == false)
+    {
+        throw AVM_Exceptions::UnderflowException();
+    }
     return ( new Operand<float>(FLOAT, value) );
 }
 
 IOperand const *Factory::createDouble(std::string const &value) const
 {
-    return ( new Operand<double>(DOUBLE, value) );
+    std::string    result;
+
+    result = std::to_string(std::stod(value.c_str()));
+    if (hasNoneZero(value) == true && hasNoneZero(result) == false)
+    {
+        throw AVM_Exceptions::UnderflowException();
+    }
+    
+    return ( new Operand<double>(DOUBLE, value));
+}
+
+bool Factory::hasNoneZero(std::string const value) const
+{
+    bool    hasNoneZero = false;
+    size_t  i = 0;
+    
+    while (i < value.length())
+    {
+        if (value.at(i) != '0' && value.at(i) != '.')
+            hasNoneZero = true;
+        i++;
+    }
+    return (hasNoneZero);
 }

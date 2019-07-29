@@ -17,6 +17,7 @@ class Factory
         IOperand const *createFloat(std::string const &value) const;
         IOperand const *createDouble(std::string const &value) const;
         IOperand const *callOperand(eOperandType type, std::string val) const;
+        bool hasNoneZero(std::string const value) const;
 
     public:
         Factory();

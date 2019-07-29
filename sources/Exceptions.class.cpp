@@ -261,3 +261,140 @@ const char *AVM_Exceptions::ArithmaticException::what() const throw()
 {
     return ("ERROR: Cannot perform this arithmatic operation.");
 }
+
+/* --------------- NO COMMANDS EXCEPTION ------------------ */
+AVM_Exceptions::NoCommandsException::NoCommandsException() throw()
+{
+}
+
+AVM_Exceptions::NoCommandsException::NoCommandsException(const NoCommandsException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        *this = opExcept;
+    }
+}
+
+AVM_Exceptions::NoCommandsException::~NoCommandsException() throw()
+{
+}
+
+AVM_Exceptions::NoCommandsException &AVM_Exceptions::NoCommandsException::operator=(const NoCommandsException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        return (*(new AVM_Exceptions::NoCommandsException(opExcept)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::NoCommandsException::what() const throw()
+{
+    return ("ERROR: No commands provided.");
+}
+
+
+/* --------------- NO EXIT COMMAND EXCEPTION ------------------ */
+AVM_Exceptions::NoExitException::NoExitException() throw()
+{
+}
+
+AVM_Exceptions::NoExitException::NoExitException(const NoExitException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        *this = opExcept;
+    }
+}
+
+AVM_Exceptions::NoExitException::~NoExitException() throw()
+{
+}
+
+AVM_Exceptions::NoExitException &AVM_Exceptions::NoExitException::operator=(const NoExitException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        return (*(new AVM_Exceptions::NoExitException(opExcept)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::NoExitException::what() const throw()
+{
+    return ("ERROR: No exit command provided.");
+}
+
+/* --------------- OVERFLOW EXCEPTION ------------------ */
+AVM_Exceptions::OverflowException::OverflowException() throw()
+{
+}
+
+AVM_Exceptions::OverflowException::OverflowException(const OverflowException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        *this = opExcept;
+    }
+}
+
+AVM_Exceptions::OverflowException::~OverflowException() throw()
+{
+}
+
+AVM_Exceptions::OverflowException &AVM_Exceptions::OverflowException::operator=(const OverflowException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        return (*(new AVM_Exceptions::OverflowException(opExcept)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::OverflowException::what() const throw()
+{
+    return ("ERROR: value overflow.");
+}
+
+/* --------------- OVERFLOW and UNDERFLOW EXCEPTION ------------------ */
+AVM_Exceptions::UnderflowException::UnderflowException() throw()
+{
+}
+
+AVM_Exceptions::UnderflowException::UnderflowException(const UnderflowException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        *this = opExcept;
+    }
+}
+
+AVM_Exceptions::UnderflowException::~UnderflowException() throw()
+{
+}
+
+AVM_Exceptions::UnderflowException &AVM_Exceptions::UnderflowException::operator=(const UnderflowException &opExcept) throw()
+{
+    if (this != &opExcept)
+    {
+        return (*(new AVM_Exceptions::UnderflowException(opExcept)));
+    }
+    else
+    {
+        return( *this );
+    }
+}
+
+const char *AVM_Exceptions::UnderflowException::what() const throw()
+{
+    return ("ERROR: value underflow.");
+}

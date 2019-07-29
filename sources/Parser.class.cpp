@@ -24,49 +24,10 @@ Parser &Parser::operator=(Parser const &parser)
 
 Parser::~Parser() {}
 
-/* 
-void Parser::readFile(std::string file)
-{
-    std::fstream filestream(file);
-    std::string line;
-
-    if (filestream.is_open())
-    {
-        while (std::getline(filestream, line))
-        {
-            if (hasComment(line))
-            {
-                std::cout << "comment" << '\n';
-            }
-            if (hasCommand(line))
-            {
-                if (isValidCommand(line))
-                {
-                    _commandsVec.push_back(getCommand(line));
-                    if (getCommand(line).compare("push") == 0 ||  getCommand(line).compare("assert") == 0)
-                    {
-                        std::cout << getCommand(line) << "->value: " << getDataValue(line) << '\n';
-                    }
-                }
-                else
-                {
-                    throw AVM_Exceptions::SyntaxErrorException();
-                }
-            }
-        }
-        displayCommands();
-    }
-    else
-    {
-        std::cout << "File not opened.\n";
-    }
-}
-*/
-
 /* Checks if given line has a comment on it. */
 bool Parser::hasComment(std::string line) const
 {
-    if (line.find_first_of(';') != std::string::npos)
+    if (line.at(0) == ';')
     {
         return (true);
     }
@@ -76,6 +37,10 @@ bool Parser::hasComment(std::string line) const
 bool Parser::hasCommand(std::string line) const
 {
     if (line.find("push") != std::string::npos)
+    {
+        return (true);
+    }
+    else if (line.find("pop") != std::string::npos)
     {
         return (true);
     }
@@ -124,56 +89,54 @@ bool Parser::hasCommand(std::string line) const
 /* Checks if given command is a valid command  */
 bool Parser::isValidCommand(std::string data) const
 {
-    std::string     command;
+    std::string command;
 
-    command = data.substr(0, 3);
-    if (command.compare("add") == 0 || command.compare("sub") == 0 || 
+    command = getCommand(data);
+    if (command.compare("add") == 0 || command.compare("sub") == 0 ||
         command.compare("div") == 0 || command.compare("mul") == 0 ||
-        command.compare("pop") == 0 || command.compare("mod") == 0 )
+        command.compare("pop") == 0 || command.compare("mod") == 0)
     {
         return (true);
     }
-
-    command = data.substr(0, 4);
-    if (command.compare("exit") == 0 || command.compare("dump") == 0) { return (true); }
-    
-    command = data.substr(0, 5);
-    if (command.compare("print") == 0 ) { return (true); }
-
-    command = data.substr(0, 4);
-    if (command.compare("push") == 0 && isValidDataType(data) && isValidDataValue(data)) 
-    { 
-        return (true); 
+    else if (command.compare("exit") == 0 || command.compare("dump") == 0)
+    {
+        return (true);
     }
-
-    command = data.substr(0, 6);
-    if (command.compare("assert") == 0 && isValidDataType(data) && isValidDataValue(data)) 
-    { 
-        return (true); 
+    else if (command.compare("print") == 0)
+    {
+        return (true);
     }
-
+    else if (command.compare("push") == 0 && isValidDataType(data) && isValidDataValue(data))
+    {
+        return (true);
+    }
+    else if (command.compare("assert") == 0 && isValidDataType(data) && isValidDataValue(data))
+    {
+        return (true);
+    }
     return (false);
 }
-
 
 /* Checks if the given string forms a valid data type i.e int8, int16, int32, float and double */
 bool Parser::isValidDataType(std::string data) const
 {
-    size_t          start;
-    size_t          end;
-    std::string     dataType;
+    size_t start;
+    size_t end;
+    std::string dataType;
 
-    start   = data.find_first_of(' ');
-    end     = data.find_first_of('(');
+    start = data.find_first_of(' ');
+    end = data.find_first_of('(');
 
-    if (start == std::string::npos || end == std::string::npos) { return (false); }
-    dataType = data.substr(start + 1, end-start - 1);
-
-    if (dataType.compare("int8") == 0 || 
-        dataType.compare("int16") == 0 || 
+    if (start == std::string::npos || end == std::string::npos)
+    {
+        return (false);
+    }
+    dataType = data.substr(start + 1, end - start - 1);
+    if (dataType.compare("int8") == 0 ||
+        dataType.compare("int16") == 0 ||
         dataType.compare("int32") == 0 ||
         dataType.compare("float") == 0 ||
-        dataType.compare("double") == 0 )
+        dataType.compare("double") == 0)
     {
         return (true);
     }
@@ -182,10 +145,10 @@ bool Parser::isValidDataType(std::string data) const
 
 bool Parser::isValidDataValue(std::string data) const
 {
-    size_t      start;
-    size_t      end;
-    size_t      dots = 0;
-    size_t      i = 0;
+    size_t start;
+    size_t end;
+    size_t dots = 0;
+    size_t i = 0;
 
     start = data.find_last_of('(');
     end = data.find_first_of(')');
@@ -194,30 +157,31 @@ bool Parser::isValidDataValue(std::string data) const
     {
         return (false);
     }
-    
+
     std::string bracketsValue;
-    bracketsValue = data.substr(start + 1, end-start-1);
+    bracketsValue = data.substr(start + 1, end - start - 1);
     while (i < bracketsValue.length())
     {
-        if (bracketsValue.at(i) == '.' )
+        if (bracketsValue.at(i) == '.')
         {
             dots++;
-            if (dots > 1) { return (false); }
-            i++;
+            if (dots > 1)
+            {
+                return (false);
+            }
         }
-        else if (bracketsValue.at(i) == '-' )
+        else if (bracketsValue.at(i) == '-')
         {
-            if (i > 0) { return (false); }
-            i++;
+            if (i > 0)
+            {
+                return (false);
+            }
         }
         else if (!isdigit(bracketsValue.at(i)))
         {
             return (false);
         }
-        else
-        {
-            i++;
-        }
+        i++;
     }
     return (true);
 }
@@ -299,22 +263,30 @@ std::string Parser::getCommand(std::string line) const
     }
 }
 
-
 std::string Parser::getDataValue(std::string line) const
 {
-    size_t      start;
-    size_t      end;
+    size_t start;
+    size_t end;
 
     start = line.find_first_of('(');
     end = line.find_first_of(')');
 
-    return (line.substr(start+1, end-start-1));
-} 
+    return (line.substr(start + 1, end - start - 1));
+}
 
-/* void Parser::displayCommands() const
+std::string Parser::getDataType(std::string data) const
 {
-    for (std::string command : _commandsVec)
+    size_t start;
+    size_t end;
+    std::string dataType;
+
+    start = data.find_first_of(' ');
+    end = data.find_first_of('(');
+
+    if (start != std::string::npos && end != std::string::npos)
     {
-        std::cout << command << '\n';
+        dataType = data.substr(start + 1, end - start - 1);
     }
-} */
+
+    return (dataType);
+}

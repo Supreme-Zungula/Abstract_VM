@@ -19,8 +19,6 @@ class Parser
         Parser & operator=(Parser const &);
         ~Parser();
 
-        // void        readFile(std::string file);
-        // void        readTerminal() const;
         bool            hasComment(std::string line) const;
         bool            hasCommand(std::string line) const;
         bool            isValidCommand(std::string line) const;
