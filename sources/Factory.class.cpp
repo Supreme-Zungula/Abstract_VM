@@ -106,7 +106,6 @@ IOperand const *Factory::createFloat(std::string const &value) const
     std::string     result;
 
     result = std::to_string(std::atof(value.c_str()));
-    std::cout << "value = " <<  value << "\nresult = " <<  result << "\n";
     if (hasNoneZero(value) == true && hasNoneZero(result) == false)
     {
         throw AVM_Exceptions::UnderflowException();

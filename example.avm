@@ -7,7 +7,7 @@ push int32(33)
 add ;poney
 push float(44.55)
 mul
-push double(42.42)
+push double(0.000000000000000000000042)
 ;comment
 push int32(42)
 dump
